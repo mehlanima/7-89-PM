@@ -1,4 +1,4 @@
-game. ReplicatedFirst:RemoveDefaultLoadingScreen()
+game.ReplicatedFirst:RemoveDefaultLoadingScreen()
 
 local PlayerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 PlayerGui: SetTopbarTransparency(0)
