@@ -12,8 +12,9 @@ local controls = PlayerModule:GetControls()
 
 local dialogueMod = require(script:WaitForChild("DialogueOne"))
 
--- Bedroom
 -------------------------------------------------------------------------
+
+-- Bedroom
 
 manga.ProximityPrompt.Triggered:Connect(function()
 	controls:Disable()
