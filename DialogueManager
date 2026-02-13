@@ -1,0 +1,24 @@
+local Tweens = game:GetService("TweenService")
+local Prompt = script.Parent
+local open = script.Parent.DoorOpen
+local close = script.Parent.DoorClose
+
+
+-- Tween animation for fade in-and-out effect for PlayerGui.FadeFrame.Frame
+script.Parent.ProximityPrompt.Triggered:Connect(function(Player)
+	open:Play()
+	
+	-- Local variables initialized here within function since player was not called before
+	local FadeFrame = Player.PlayerGui.FadeFrame.Frame
+	
+	-- Tween animation timing is 0.1 second longer than teleportation time to ensure seamlessness
+	local Tween = Tweens:Create(FadeFrame, TweenInfo.new(0.9, Enum.EasingStyle.Linear, Enum.EasingDirection.Out, 0, true), {BackgroundTransparency = 0})
+	Tween:Play()
+	
+	-- Wait for DoorClose sound to play
+	wait(0.89)
+	close:Play()
+	
+	-- Script does not end until the tween animation is fully complete.
+	Tween.Completed:Wait()
+end)
