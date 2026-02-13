@@ -1,24 +1,45 @@
-local Tweens = game:GetService("TweenService")
-local Prompt = script.Parent
-local open = script.Parent.DoorOpen
-local close = script.Parent.DoorClose
+-- Proximity prompts in bedroom
+local manga = workspace:WaitForChild("Manga")
+local chair = workspace:WaitForChild("Chair")
+local posters = workspace:WaitForChild("Posters")
 
+-- Proximity prompt in corridor
+local corridor_monster = workspace:WaitForChild("Corridor_Monster")
 
--- Tween animation for fade in-and-out effect for PlayerGui.FadeFrame.Frame
-script.Parent.ProximityPrompt.Triggered:Connect(function(Player)
-	open:Play()
-	
-	-- Local variables initialized here within function since player was not called before
-	local FadeFrame = Player.PlayerGui.FadeFrame.Frame
-	
-	-- Tween animation timing is 0.1 second longer than teleportation time to ensure seamlessness
-	local Tween = Tweens:Create(FadeFrame, TweenInfo.new(0.9, Enum.EasingStyle.Linear, Enum.EasingDirection.Out, 0, true), {BackgroundTransparency = 0})
-	Tween:Play()
-	
-	-- Wait for DoorClose sound to play
-	wait(0.89)
-	close:Play()
-	
-	-- Script does not end until the tween animation is fully complete.
-	Tween.Completed:Wait()
+-- Variables that allow us to disable/enable the player's movement
+local PlayerModule = require(game:GetService('Players').LocalPlayer.PlayerScripts:WaitForChild('PlayerModule'))
+local controls = PlayerModule:GetControls()
+
+local dialogueMod = require(script:WaitForChild("DialogueOne"))
+
+-- Bedroom
+-------------------------------------------------------------------------
+
+manga.ProximityPrompt.Triggered:Connect(function()
+	controls:Disable()
+	dialogueMod.Activated("These are my books. <br /> Mostly manga, but Scott Pilgrim's mixed in there, too.", 0.07)
+	controls:Enable()
+end)
+
+chair.ProximityPrompt.Triggered:Connect(function()
+	controls:Disable()
+	dialogueMod.Activated("You can find me sitting here most of the time.", 0.07)
+	controls:Enable()
+end)
+
+posters.ProximityPrompt.Triggered:Connect(function()
+	controls:Disable()
+	dialogueMod.Activated("I found these on sale at a flea market. Pretty cool, huh? <br /> I wish I had someone to show these to.", 0.07)
+	controls:Enable()
+end)
+
+-------------------------------------------------------------------------
+
+-- Corridor
+
+corridor_monster.Touched:Connect(function(touch)
+	controls:Disable()
+	dialogueMod.Activated("Nil? Tell me you have not forgotten. <br /> Surely, it's all the same to you.", 0.07)
+	corridor_monster:Destroy()
+	controls:Enable()
 end)
