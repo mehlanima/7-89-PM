@@ -1,0 +1,16 @@
+local tpname = "TP2"
+script.Parent.ProximityPrompt.Enabled = true
+
+-- "tpname" is the correlating location that this proximity prompt will teleport the player to
+
+script.Parent.ProximityPrompt.Triggered:Connect(function(player)
+	-- Proximity prompt is invisible for the wait time that the player is being teleported
+	script.Parent.ProximityPrompt.Enabled = false
+	wait(0.8)
+
+	-- Player character is moved to "tpname" position.
+	player.Character:MoveTo(script.Parent.Parent:FindFirstChild(tpname).Position)
+
+	-- Proximity prompt is made visible again so that player can travel back
+	script.Parent.ProximityPrompt.Enabled = true
+end)
